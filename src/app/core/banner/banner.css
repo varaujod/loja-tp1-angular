@@ -1,0 +1,19 @@
+.banner{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(
+        100deg,
+        rgb(55, 0, 76) 15%,
+        rgb(0, 107, 12)
+    );
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    letter-spacing: 0.3rem;
+}
+
+.banner img{
+    height: 50px;
+}

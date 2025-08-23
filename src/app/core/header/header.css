@@ -9,12 +9,14 @@
     color: #ffff;
     padding: 15px;
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .header nav a{
     color: #ffff;
     margin: 0px;
     text-decoration: none;
+    padding: 16px;
 }
 
 .header img{

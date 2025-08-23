@@ -1,0 +1,10 @@
+:root{
+    --cor-texto: #ffff;
+}
+
+.container {
+    margin: 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    max-width: 800px;
+}
