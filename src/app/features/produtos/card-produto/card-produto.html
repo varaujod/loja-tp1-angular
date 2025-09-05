@@ -10,8 +10,11 @@
         </div>
         
         <div class="acoes">
-            <button class="btn primary" (click)="onAdd()">Adicionar</button>
             <button class="btn ghost" (click)="onView()">Detalhes</button>
+            @if(qtde() > 0 && produto().estado != 'esgotado'){
+                <button class="btn primary" (click)="onAdd()">Adicionar</button>
+            }
         </div>
+
     </div>
 </article>
