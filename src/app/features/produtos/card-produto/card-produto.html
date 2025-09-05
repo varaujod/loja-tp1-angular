@@ -1,10 +1,27 @@
 <article class="card" [class.promo]="produto().promo">
     <img class="thumb" [src]="produto().imageURL" [alt]="produto().nome">
     <div class="conteudo">
-        <h3 class="titulo">{{produto().nome}}</h3>
+        <header class="cabecalho">
+            <h3 class="titulo">{{produto().nome}}</h3>
+
+            @switch(produto().estado){
+                @case('novo'){
+                    <span class="selo novo">Novo</span>
+                }
+                @case('esgotado'){
+                    <span class="selo esgotado">Esgotado</span>
+                }
+            }
+
+            @if(produto().promo){
+                <span class="selo promo">Aproveite</span>
+            }
+
+        </header>
+        
         <p class="desc">{{produto().descricao}}</p>
 
-        <div class="linhaPreco">
+        <div class="linhapreco">
             <span class="preco">{{produto().preco | currency: 'BRL': 'symbol': '1.1-2'}}</span>
             <app-quantidade-controle [(contador)]="qtde"></app-quantidade-controle>
         </div>
