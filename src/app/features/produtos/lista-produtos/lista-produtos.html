@@ -10,13 +10,15 @@
         </button>
     </header>
     
-    @if(prodExibidos().length == 0){
-        <p class="vazio">Nenhum produto encontrado para o filtro atual</p>
-    } @else {
-        <div class="grid">
-            @for (p of prodExibidos(); track p.id){
+    <div class="grid">
+        @for (p of prodExibidos(); track p.id){
+            @if(!(p.estado === 'esgotado' && p.promo)) {
                 <app-card-produto [produto]="p" (add)="onAddProduct($event)" (view)="onViewProduct($event)"></app-card-produto>
             }
-        </div>
-    }
+        }
+        @empty{
+            <p class="vazio">Nenhum produto encontrado para o filtro atual</p>
+        }
+    </div>
+
 </section>

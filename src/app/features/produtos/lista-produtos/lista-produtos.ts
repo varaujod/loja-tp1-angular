@@ -13,24 +13,26 @@ export class ListaProdutos {
   {
     id: 1,
     nome: 'Produto 1',
-    descricao: 'Desc. Produto 1',
+    descricao: 'Desc. Produto 1111111111111111111111111111111111111111111111111111111111111111111',
     preco: 179.00,
     imageURL: 'images/logoifsp.png',
-    // promo: true
+    promo: true
   },
   {
     id: 2,
     nome: 'Produto 2',
     descricao: 'Desc. Produto 2',
     preco: 179.00,
-    estado: 'esgotado'
+    estado: 'novo', 
+    promo: true
   },
   {
     id: 3,
     nome: 'Produto 3',
     descricao: 'Desc. Produto 3',
     preco: 179.00,
-    estado: 'novo'
+    estado: 'esgotado',
+    promo: true
   }
   ]
 
@@ -48,5 +50,9 @@ export class ListaProdutos {
 
   onViewProduct(id: number){
     alert(`Id do produto: ${id}`);
+  }
+
+  produtosValidos() {
+    return this.produtos.filter(p => !(p.estado === 'esgotado' && p.promo));
   }
 }
