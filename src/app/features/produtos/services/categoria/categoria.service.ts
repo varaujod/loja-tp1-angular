@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { LoggerService } from '../../../../core/services/logger/logger.service';
 import { Produto } from '../../../../model/produto';
-import { delay, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutoService {
+export class CategoriaService {
   logger = inject(LoggerService);
 
   private readonly listaMock: Produto[] = [
@@ -16,7 +16,7 @@ export class ProdutoService {
       descricao: 'Desc. Produto 1111111111111111111111111111111111111111111111111111111111111111111',
       preco: 179.00,
       imageURL: 'images/logoifsp.png',
-      promo: true, 
+      promo: true,
       categoria: 'categoria1'
     },
     {
@@ -37,8 +37,9 @@ export class ProdutoService {
     }
   ];
 
-  listar(): Observable<Produto[]>{
-    this.logger.info('[ProdutoService] - listando produtos');
-    return of(this.listaMock).pipe(delay(1000));
+  listar(): Observable<string[]>{
+    const categorias = this.listaMock.map(produto => produto.categoria).filter((cat): cat is string => typeof cat === 'string');
+    const categoriasUnicas = [...new Set(categorias)];
+    return of(categoriasUnicas);
   }
 }

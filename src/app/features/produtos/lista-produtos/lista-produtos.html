@@ -8,6 +8,13 @@
                 Somente Promoções
             }
         </button>
+
+        <select #categoriaSelect (change)="selecionarCategoria(categoriaSelect.value)">
+            <option value="">Todas</option>
+            @for (cat of categorias(); track cat) {
+                <option [value]="cat">{{ cat }}</option>
+            }
+        </select>
     </header>
     
     <div class="grid">
