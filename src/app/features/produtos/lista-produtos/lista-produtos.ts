@@ -4,16 +4,19 @@ import { CardProduto } from "../card-produto/card-produto";
 import { ProdutoService } from '../services/produto/produto.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CategoriaService } from '../services/categoria/categoria.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'lista-produtos',
-  imports: [CardProduto],
+  imports: [CommonModule, CardProduto],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css'
 })
 export class ListaProdutos {
   private produtoService = inject(ProdutoService);
   private categoriaService = inject(CategoriaService);
+  private router = inject(Router);
 
   private produtos = toSignal<Produto[], Produto[]>(
     this.produtoService.listar(),
@@ -30,13 +33,13 @@ export class ListaProdutos {
   apenasPromo = signal(false);
 
   prodExibidos = computed(() => {
-    let lista = this.apenasPromo() ? this.produtos().filter(p => p.promo) : this.produtos();
+    let lista =  this.apenasPromo() ? this.produtos().filter(p => p.promo) : this.produtos();
 
     if(this.categoriaSelecionada()){
       lista = lista.filter(p => p.categoria === this.categoriaSelecionada());
     }
 
-    return lista
+    return lista;
   });
     
   selecionarCategoria(categoria: string) {
@@ -52,7 +55,7 @@ export class ListaProdutos {
   }
 
   onViewProduct(id: number){
-    alert(`Id do produto: ${id}`);
+    this.router.navigate(['/produtos', id]);
   }
 
   produtosValidos() {
