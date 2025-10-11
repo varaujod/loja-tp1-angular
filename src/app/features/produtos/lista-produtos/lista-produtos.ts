@@ -6,6 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CategoriaService } from '../services/categoria/categoria.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'lista-produtos',
@@ -17,9 +18,10 @@ export class ListaProdutos {
   private produtoService = inject(ProdutoService);
   private categoriaService = inject(CategoriaService);
   private router = inject(Router);
+  loading = signal(true);
 
   private produtos = toSignal<Produto[], Produto[]>(
-    this.produtoService.listar(),
+    this.produtoService.listar().pipe(finalize(() => this.loading.set(false))),
     {initialValue: []}
   )
 
