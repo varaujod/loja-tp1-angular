@@ -21,6 +21,7 @@ export class ProdutoMapper {
             preco: json.price,
             descricao: json.description,
             imageURL: json.image,
+            categoria: json.category,
             estado: _estado,
             promo: json.id % 5 == 0 && _estado != 'esgotado'
         };

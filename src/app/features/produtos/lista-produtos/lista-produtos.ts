@@ -30,6 +30,10 @@ export class ListaProdutos {
     {initialValue: []}
   );
 
+  ngOnInit() {
+  console.log('Categorias carregadas:', this.categorias());
+}
+
   categoriaSelecionada = signal<string>('');
 
   apenasPromo = signal(false);
@@ -44,9 +48,11 @@ export class ListaProdutos {
     return lista;
   });
     
-  selecionarCategoria(categoria: string) {
+  selecionarCategoria(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const categoria = select.value;
     this.categoriaSelecionada.set(categoria);
-  }
+}
 
   alternarPromo(){
     this.apenasPromo.update(p => !p);

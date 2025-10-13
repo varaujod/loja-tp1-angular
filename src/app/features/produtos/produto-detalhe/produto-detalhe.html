@@ -9,17 +9,27 @@
         }
         @else {
             <article class="detalhe-card">
-                <img class="thumb" src="produto()?.imageURL" [alt]="produto()?.nome">
+                <img class="thumb" [src]="produto()?.imageURL" [alt]="produto()?.nome">
                 <div class="infos">
                     <h2>{{ produto()?.nome }}</h2>
                     <p class="descricao">{{ produto()?.descricao}}</p>
-                    @if (produto()?.promo) {
-                        {{produto()!.preco | desconto:10 | currency:'BRL': 'symbol': '1.2-2' }}
-                    }
-                    @else {
-
-                    }{{produto()!.preco | currency:'BRL': 'symbol': '1.2-2' }}
-
+                    
+                    <div class="preco-container">
+                        @if (produto()?.promo) {
+                            <div class="preco-group">
+                                <span class="preco desconto">
+                                    {{produto()!.preco | desconto:10 | currency:'BRL': 'symbol': '1.2-2' }}
+                                </span>
+                                <span class="preco original">
+                                    {{produto()!.preco | currency:'BRL': 'symbol': '1.2-2' }}
+                                </span>
+                            </div>
+                        } @else {
+                            <span class="preco">
+                                {{produto()!.preco | currency:'BRL': 'symbol': '1.2-2' }}
+                            </span>
+                        }
+                    </div>
                     <div class="acoes">
                         <button class="btn ghost" (click)="voltar()">Voltar</button>
                     </div>
@@ -27,5 +37,4 @@
             </article>
         }
     }
-
 </section>

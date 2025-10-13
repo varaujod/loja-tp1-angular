@@ -21,7 +21,12 @@ export class ProdutoService {
   }
 
   getById(id: number): Observable<Produto | undefined>{
-    return of(this.listaMock.find(p => id == id));
+    this.logger.info(`[ProdutoService] getById(${id})`);
+    return this.http.get<any>(`https://fakestoreapi.com/products/${id}`).pipe(
+      map(json => ProdutoMapper.fromJson(json)),
+      catchError(err => of())
+    );
+
     //return of(this.listaMock.find(p => id == id))//pipe(delay(500));
   }
 }
