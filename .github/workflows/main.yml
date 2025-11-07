@@ -92,8 +92,8 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           # ID do Projeto Vercel (configurado como GitHub Secret)
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          # # ID da Organização Vercel (configurado como GitHub Secret)
-          # vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          # ID da Organização Vercel (configurado como GitHub Secret)
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           # Define o diretório de build a ser publicado (ajuste conforme a estrutura da sua dist/):
           working-directory: ${{ env.ARTIFACT_DIR }}
           # Define que é um deploy de produção (publicação final)
