@@ -49,15 +49,20 @@ jobs:
       - name: Build da Aplicação Angular (Produção)
         run: ${{ env.BUILD_COMMAND }}
 
-      # Passo 5: Upload do Artefato
-      # Salva o diretório de build (a pasta 'dist') como um artefato no GitHub.
-      # Este artefato será usado pelo próximo trabalho (deploy).
-      - name: Upload do Artefato de Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifact
-          path: ${{ env.DIST_DIR }}
-          retention-days: 1 # Define por quanto tempo manter o artefato.
+      - name: run instala e builda
+          run: |
+          npm install
+          npm run build
+
+      # # Passo 5: Upload do Artefato
+      # # Salva o diretório de build (a pasta 'dist') como um artefato no GitHub.
+      # # Este artefato será usado pelo próximo trabalho (deploy).
+      # - name: Upload do Artefato de Build
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: build-artifact
+      #     path: ${{ env.DIST_DIR }}
+      #     retention-days: 1 # Define por quanto tempo manter o artefato.
 
   # --- Trabalho de Deploy (Entrega Contínua/Implantação Contínua) ---
   deploy:
