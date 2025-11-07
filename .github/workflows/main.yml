@@ -85,7 +85,7 @@ jobs:
         uses: amondnet/vercel-action@v20
         with:
           # ANTES DE ESCREVER ESSE CODIGO, tive que realizar duas operações: Descobrir o Token e o Id do projeto e adicionar como segredo no projeto no Github
-          # O id do projeto e o Token(chave) foram tranquilos pois as configurações foram no meu projeto no Vercel
+          # O id do projeto e o Token(chave) foram tranquilos pois as configurações foram no meu projeto do Vercel
             vercel-token: ${{ secrets.VERCEL_TOKEN }}          # Token de API secreto  
             vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # ID do Projeto secreto
             github-token: ${{ secrets.GITHUB_TOKEN }}          # Token do GitHub
