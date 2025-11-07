@@ -1,0 +1,92 @@
+name: CI/CD Angular - Loja
+
+# --- Gatilho (Trigger) --- ( Define quando este workflow será executado. )
+# Neste caso, será executado sempre que houver um push (commit) na branch 'main' (ou 'master').
+on:
+  push:
+    branches:
+      - main
+      - cod-exercicios # Adicione master se for a branch principal do seu repositório
+  # Permite a execução manual do workflow na aba "Actions" do GitHub.
+  workflow_dispatch:
+
+# --- Trabalhos (Jobs) --- ( Define os trabalhos (conjuntos de passos) a serem executados. )
+jobs:
+  # O primeiro trabalho, responsável pela Integração Contínua (Build).
+  build:
+    # Define o ambiente onde o trabalho será executado (usando a imagem Ubuntu mais recente).
+    runs-on: ubuntu-latest
+
+    # Variáveis de ambiente que podem ser usadas nos passos.
+    env:
+      # Comando Angular para build em modo produção. O output fica em 'dist/' por padrão.
+      BUILD_COMMAND: ng build --configuration=production
+      # Nome do diretório gerado pelo build (artifact). O nome exato depende do projeto Angular.
+      DIST_DIR: dist/loja-tp1-angular
+
+    # Sequência de passos que o trabalho 'build' irá executar.
+    steps:
+      # Passo 1: Checkout do código
+      # Clona o repositório do GitHub na máquina virtual.
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4 # Ele usa a Action oficial para checkout.
+
+      # Passo 2: Configuração do Node.js
+      # Configura o ambiente Node.js, crucial para aplicações Angular.
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0' # Define a versão do Node.js (ajuste se necessário)
+          cache: 'npm' # Habilita o cache de dependências NPM para builds mais rápidos.
+
+      # Passo 3: Instalação de Dependências
+      # Instala todas as dependências do projeto definidas no package.json.
+      - name: Instalar Dependências (npm install)
+        run: npm ci # 'npm ci' é mais rápido e confiável em ambientes de CI.
+
+      # Passo 4: Build da Aplicação em Modo Produção
+      # Executa o comando de build Angular para gerar os arquivos estáticos de produção.
+      - name: Build da Aplicação Angular (Produção)
+        run: ${{ env.BUILD_COMMAND }}
+
+      # Passo 5: Upload do Artefato
+      # Salva o diretório de build (a pasta 'dist') como um artefato no GitHub.
+      # Este artefato será usado pelo próximo trabalho (deploy).
+      - name: Upload do Artefato de Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: ${{ env.DIST_DIR }}
+          retention-days: 1 # Define por quanto tempo manter o artefato.
+
+  # --- Trabalho de Deploy (Entrega Contínua/Implantação Contínua) ---
+  deploy:
+    # Este trabalho só será executado após o trabalho 'build' ter sido concluído com sucesso.
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Variáveis de ambiente para o Deploy.
+    env:
+      # Diretório onde o artefato será baixado. Deve ser o mesmo usado no job de build.
+      ARTIFACT_DIR: dist/loja-tp1-angular
+
+    # Sequência de passos para o deploy.
+    steps:
+      # Passo 1: Download do Artefato
+      # Baixa os arquivos de build gerados pelo trabalho 'build'.
+      - name: Download do Artefato de Build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ${{ env.ARTIFACT_DIR }}
+
+      # --- Opção Vercel ---
+      - name: Deploy para Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+            vercel-token: ${{ secrets.VERCEL_TOKEN }}          # Token de API secreto  
+            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # ID do Projeto secreto
+            github-token: ${{ secrets.GITHUB_TOKEN }}          # Token do GitHub
+            # O diretório 'dist' que contém o output do build do Angular
+            # Se o Vercel CLI puder inferir, pode não ser necessário:
+            build-env: ${{ env.ARTIFACT_DIR }}
