@@ -1,105 +1,18 @@
-name: CI/CD Angular - Loja
+name: Continuos Integration
 
-# --- Gatilho (Trigger) --- ( Define quando este workflow será executado. )
-# Neste caso, será executado sempre que houver um push (commit) na branch 'main' (ou 'master').
-on:
-  push:
-    branches:
-      - main
-      - cod-exercicios # Adicione master se for a branch principal do seu repositório
-  # Permite a execução manual do workflow na aba "Actions" do GitHub.
-  workflow_dispatch:
+on: pull_request
 
-# --- Trabalhos (Jobs) --- ( Define os trabalhos (conjuntos de passos) a serem executados. )
 jobs:
-  # O primeiro trabalho, responsável pela Integração Contínua (Build).
-  build:
-    # Define o ambiente onde o trabalho será executado (usando a imagem Ubuntu mais recente).
+  continuos-integration:
     runs-on: ubuntu-latest
 
-    # Variáveis de ambiente que podem ser usadas nos passos.
-    env:
-      # Comando Angular para build em modo produção. O output fica em 'dist/' por padrão.
-      BUILD_COMMAND: ng build --configuration=production
-      # Nome do diretório gerado pelo build (artifact). O nome exato depende do projeto Angular.
-      DIST_DIR: dist/loja-tp1-angular
-
-    # Sequência de passos que o trabalho 'build' irá executar.
     steps:
-      # Passo 1: Checkout do código
-      # Clona o repositório do GitHub na máquina virtual.
-      - name: Checkout do Repositório
-        uses: actions/checkout@v4 # Ele usa a Action oficial para checkout.
-
-      # Passo 2: Configuração do Node.js
-      # Configura o ambiente Node.js, crucial para aplicações Angular.
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - name: Using Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: '22.14.0' # Define a versão do Node.js (ajuste se necessário)
-          cache: 'npm' # Habilita o cache de dependências NPM para builds mais rápidos.
-
-      # Passo 3: Instalação de Dependências
-      # Instala todas as dependências do projeto definidas no package.json.
-      - name: Instalar Dependências (npm install)
-        run: npm ci # 'npm ci' é mais rápido e confiável em ambientes de CI.
-
-      # Passo 4: Build da Aplicação em Modo Produção
-      # Executa o comando de build Angular para gerar os arquivos estáticos de produção.
-      - name: Build da Aplicação Angular (Produção)
-        run: ${{ env.BUILD_COMMAND }}
-
-      - name: run instala e builda
-          run: |
+          node-version: 22.
+      - name: run install and build
+        run: |
           npm install
           npm run build
-
-      # # Passo 5: Upload do Artefato
-      # # Salva o diretório de build (a pasta 'dist') como um artefato no GitHub.
-      # # Este artefato será usado pelo próximo trabalho (deploy).
-      # - name: Upload do Artefato de Build
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: build-artifact
-      #     path: ${{ env.DIST_DIR }}
-      #     retention-days: 1 # Define por quanto tempo manter o artefato.
-
-  # --- Trabalho de Deploy (Entrega Contínua/Implantação Contínua) ---
-  deploy:
-    # Este trabalho só será executado após o trabalho 'build' ter sido concluído com sucesso.
-    needs: build
-    runs-on: ubuntu-latest
-
-    # Variáveis de ambiente para o Deploy.
-    env:
-      # Diretório onde o artefato será baixado. Deve ser o mesmo usado no job de build.
-      ARTIFACT_DIR: dist/loja-tp1-angular
-
-    # Sequência de passos para o deploy.
-    steps:
-      # Passo 1: Download do Artefato
-      # Baixa os arquivos de build gerados pelo trabalho 'build'.
-      - name: Download do Artefato de Build
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: ${{ env.ARTIFACT_DIR }}
-
-      # Passo 2: Deploy para Vercel (CD)
-      # Usei a Action da Vercel para publicar a aplicação.
-      # ANTES DE ESCREVER ESSE CODIGO, tive que realizar duas operações: 
-      # Descobrir o Token e o Id do projeto e adicionar como segredo no projeto no Github
-      # O id do projeto e o Token(chave) foram tranquilos pois as configurações foram no meu projeto do Vercel
-      - name: Deploy da Aplicação para Vercel
-        uses: amondnet/vercel-action@v25 # Uma Action popular para Vercel
-        with:
-          # Token de API da Vercel (configurado como GitHub Secret)
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          # ID do Projeto Vercel (configurado como GitHub Secret)
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          # ID da Organização Vercel (configurado como GitHub Secret)
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          # Define o diretório de build a ser publicado (ajuste conforme a estrutura da sua dist/):
-          working-directory: ${{ env.ARTIFACT_DIR }}
-          # Define que é um deploy de produção (publicação final) .
-          vercel-args: '--prod'
