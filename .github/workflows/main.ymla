@@ -96,5 +96,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           # Define o diretório de build a ser publicado (ajuste conforme a estrutura da sua dist/):
           working-directory: ${{ env.ARTIFACT_DIR }}
-          # Define que é um deploy de produção (publicação final)
+          # Define que é um deploy de produção (publicação final) .
           vercel-args: '--prod'
