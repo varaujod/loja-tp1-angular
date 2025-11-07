@@ -80,15 +80,21 @@ jobs:
           name: build-artifact
           path: ${{ env.ARTIFACT_DIR }}
 
-      # --- Opção Vercel ---
-      - name: Deploy para Vercel
-        uses: amondnet/vercel-action@v20
+      # Passo 2: Deploy para Vercel (CD)
+      # Usei a Action da Vercel para publicar a aplicação.
+      # ANTES DE ESCREVER ESSE CODIGO, tive que realizar duas operações: 
+      # Descobrir o Token e o Id do projeto e adicionar como segredo no projeto no Github
+      # O id do projeto e o Token(chave) foram tranquilos pois as configurações foram no meu projeto do Vercel
+      - name: Deploy da Aplicação para Vercel
+        uses: amondnet/vercel-action@v25 # Uma Action popular para Vercel
         with:
-          # ANTES DE ESCREVER ESSE CODIGO, tive que realizar duas operações: Descobrir o Token e o Id do projeto e adicionar como segredo no projeto no Github
-          # O id do projeto e o Token(chave) foram tranquilos pois as configurações foram no meu projeto do Vercel
-            vercel-token: ${{ secrets.VERCEL_TOKEN }}          # Token de API secreto  
-            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # ID do Projeto secreto
-            github-token: ${{ secrets.GITHUB_TOKEN }}          # Token do GitHub
-            # O diretório 'dist' que contém o output do build do Angular
-            # Se o Vercel CLI puder inferir, pode não ser necessário:
-            build-env: ${{ env.ARTIFACT_DIR }}
+          # Token de API da Vercel (configurado como GitHub Secret)
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          # ID do Projeto Vercel (configurado como GitHub Secret)
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          # # ID da Organização Vercel (configurado como GitHub Secret)
+          # vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          # Define o diretório de build a ser publicado (ajuste conforme a estrutura da sua dist/):
+          working-directory: ${{ env.ARTIFACT_DIR }}
+          # Define que é um deploy de produção (publicação final)
+          vercel-args: '--prod'
