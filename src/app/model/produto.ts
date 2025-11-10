@@ -14,7 +14,7 @@ const estados = ['novo', "usado", "esgotado"] as const;
 export class ProdutoMapper {
     static fromJson(json: any) : Produto{
         let _estado = estados[Math.floor(Math.random() * estados.length)];
-        
+
         return{
             id: json.id,
             nome: json.title,

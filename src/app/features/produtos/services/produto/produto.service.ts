@@ -26,7 +26,5 @@ export class ProdutoService {
       map(json => ProdutoMapper.fromJson(json)),
       catchError(err => of())
     );
-
-    //return of(this.listaMock.find(p => id == id))//pipe(delay(500));
   }
 }

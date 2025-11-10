@@ -8,19 +8,12 @@
                 <option [value]="cat">{{ cat }}</option>
             }
         </select>
-<!-- 
-        <button class="btn sopromo" [class.active]="apenasPromo()" (click)="alternarPromo()">
-            @if(apenasPromo()){
-                Mostrar Todos
-            } @else {
-                Somente Promoções
-            }
-        </button> -->
     </header>
 
     @if(loading()){
         <p>Carregando produtos...</p>
     }
+    
     <div class="grid">
         @for (p of prodExibidos(); track p.id){
             @if(!(p.estado === 'esgotado' && p.promo)) {

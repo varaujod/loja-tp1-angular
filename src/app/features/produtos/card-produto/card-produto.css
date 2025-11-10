@@ -50,15 +50,15 @@
 }
 
 .preco-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .preco-group {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .preco.desconto {
@@ -67,9 +67,9 @@
 }
 
 .preco.original {
-  text-decoration: line-through;
-  color: #888;
-  font-size: 0.9rem;
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.9rem;
 }
 
 .acoes {
@@ -123,11 +123,13 @@
   color: #065f46;
   border-color: #a7f3d0;
 }
+
 .selo.esgotado {
   background: #fef2f2;
   color: #991b1b;
   border-color: #fecaca;
 }
+
 .selo.promo {
   background: #eff6ff;
   color: #1d4ed8;
