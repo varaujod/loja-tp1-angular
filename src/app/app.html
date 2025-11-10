@@ -1,11 +1,10 @@
 <app-header [tituloLoja]="'Loja TP1 Angular'" (textoSobre)="receberSobre($event)"></app-header>
 
-<app-banner></app-banner>
-
-<div class="container">
-    <!-- <h2>Angular - Aula 02</h2>
-    <span>{{ sobre ?? 'Em construção' }}</span><br><br> -->
-    <lista-produtos></lista-produtos>
-</div>
-
-<app-footer></app-footer>
+<body>
+    <main>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+    <app-footer></app-footer>
+</body>

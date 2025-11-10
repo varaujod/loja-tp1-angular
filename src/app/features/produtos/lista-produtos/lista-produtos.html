@@ -1,14 +1,18 @@
 <section class="catalogo">
     <header class="barradetarefas">
         <h2>Catalogo</h2>
-        <button class="btn sopromo" [class.active]="apenasPromo()" (click)="alternarPromo()">
-            @if(apenasPromo()){
-                Mostrar Todos
-            } @else {
-                Somente Promoções
+
+        <select class="btn sopromo" [value]="categoriaSelecionada()" (change)="selecionarCategoria($event)">
+            <option value="">Todas as categorias</option>
+            @for (cat of categorias(); track cat) {
+                <option [value]="cat">{{ cat }}</option>
             }
-        </button>
+        </select>
     </header>
+
+    @if(loading()){
+        <p>Carregando produtos...</p>
+    }
     
     <div class="grid">
         @for (p of prodExibidos(); track p.id){

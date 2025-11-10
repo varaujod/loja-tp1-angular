@@ -6,8 +6,7 @@
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     background: #fff;
-    height: 200px;
-    margin: 5px;
+    height: 180px;
 }
 
 .card.promo {
@@ -48,40 +47,39 @@
 .preco {
     font-weight: 700;
     color: #111827;
-    margin-right: 8px;
 }
 
 .preco-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .preco-group {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .preco.desconto {
-  color: #d32f2f;
-  font-weight: bold;
-  
+    color: #d32f2f;
+    font-weight: bold;
 }
 
 .preco.original {
-  text-decoration: line-through;
-  color: #888;
-  font-size: 0.9rem;
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.9rem;
 }
 
 .acoes {
     display: flex;
     gap: 12px;
     margin-top: 8px;
+    justify-content: right;
 }
 
-.esgotado{
+.esgotado {
     padding-top: 10px;
     color: red;
     font-weight: bold;
@@ -100,7 +98,7 @@
 }
 
 .btn.primary:hover {
-    opacity: .95;
+    opacity: 0.95;
 }
 
 .btn.ghost {
@@ -120,12 +118,28 @@
   border-radius: 999px;
   border: 1px solid transparent;
 }
-.selo.novo { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
-.selo.esgotado { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
-.selo.promo { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+
+.selo.novo {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.selo.esgotado {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.selo.promo {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
 
 .cabecalho {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }

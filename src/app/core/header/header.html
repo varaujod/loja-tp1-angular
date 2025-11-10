@@ -1,11 +1,9 @@
 <header class="header">
-    <img src="images/logoifsp.png">
-    <!-- <h1>Loja TP1 Angular</h1> -->
-    <!-- <h1>{{titulo}}</h1> -->
+    <img routerLink="/" src="images/logoifsp.png" alt="">
     <h1>{{ tituloLoja() }}</h1>
     <nav>
-        <a href="#">Home</a> | 
-        <a href="#">Produtos</a> | 
-        <a href="#" (click)="enviarSobre()">Sobre</a>
+        <a routerLink="/">Home</a>
+        <a routerLink="/produtos">Produtos</a> 
+        <a routerLink="/sobre">Sobre</a>
     </nav>
 </header>
