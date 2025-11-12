@@ -1,0 +1,42 @@
+# Define o nome do workflow que aparecerá no GitHub.
+name: CI/CD
+
+
+# O workflow será executado sempre que houver um 'pull_request'.
+# Isso garante que o código novo seja verificado antes de ser mesclado à branch principal.
+on: [pull_request,push] 
+
+# 'jobs' agrupa todos os trabalhos que serão executados no workflow.
+jobs: 
+  # Define um trabalho específico 
+  continuous-integration:
+    # Especifica o ambiente onde este trabalho será executado.
+    # 'ubuntu-latest' usa a versão mais recente do sistema operacional Ubuntu hospedado pelo GitHub.
+    runs-on: ubuntu-latest
+
+    # 'steps' é uma lista de tarefas sequenciais que o job irá executar.
+    steps:
+      # Usa a action 'actions/checkout' para baixar o código do seu repositório 
+      # e disponibilizá-lo na máquina virtual do GitHub Actions.
+      - uses: actions/checkout@v5
+      
+      # PASSO 2: Configuração do Node.js
+      # Define um nome para este passo.
+      - name: Using Node.js
+        # Usa a action 'actions/setup-node' para instalar uma versão específica do Node.js.
+        uses: actions/setup-node@v6
+        with:
+          # Define a versão do Node.js a ser instalada. 
+          node-version: 22.
+          
+      # Define um nome para este passo que agrupa várias ações de linha de comando.
+      - name: run install and build
+        # O comando 'run' permite executar comandos de shell.
+        # npm install : Instala as dependências do projeto.
+        # Executa o comando de build, compilação do projeto Angular.
+        run: |
+          npm install
+          npm run build -- --configuration production
+      - name: Disparar Vercel
+        run: |
+          curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_XsE9HFVlMV5SXSX68VFmBQ713vXV/087Zym07xB
