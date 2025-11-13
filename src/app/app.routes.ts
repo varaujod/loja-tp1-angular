@@ -10,4 +10,5 @@ export const routes: Routes = [
     {path: 'produtos/:id', component: ProdutoDetalhe},
     {path: 'sobre', component: Sobre},
     {path: '**', redirectTo: ''}
+
 ];
