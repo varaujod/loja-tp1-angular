@@ -69,4 +69,8 @@ export class ListaProdutos {
   produtosValidos() {
     return this.produtos().filter(p => !(p.estado === 'esgotado' && p.promo));
   }
+
+  onCreateProduct(rota: String){
+    this.router.navigate([rota]);
+  }
 }

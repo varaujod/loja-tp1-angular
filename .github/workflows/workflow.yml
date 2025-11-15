@@ -1,7 +1,6 @@
 # Define o nome do workflow que aparecerá no GitHub.
 name: CI/CD
 
-
 # O workflow será executado sempre que houver um 'pull_request'.
 # Isso garante que o código novo seja verificado antes de ser mesclado à branch principal.
 on: [pull_request,push] 

@@ -2,12 +2,20 @@
     <header class="barradetarefas">
         <h2>Catalogo</h2>
 
-        <select class="btn sopromo" [value]="categoriaSelecionada()" (change)="selecionarCategoria($event)">
-            <option value="">Todas as categorias</option>
-            @for (cat of categorias(); track cat) {
-                <option [value]="cat">{{ cat }}</option>
-            }
-        </select>
+        <div class="acoes-header">
+            <select class="btn sopromo" [value]="categoriaSelecionada()" (change)="selecionarCategoria($event)">
+                <option value="">Todas as categorias</option>
+                @for (cat of categorias(); track cat) {
+                    <option [value]="cat">{{ cat }}</option>
+                }
+            </select>
+
+            <button type="button" class="btn-primary" (click)="onCreateProduct('/produtos/novo')">
+                + Novo Produto
+            </button>
+        </div>
+
+        
     </header>
 
     @if(loading()){
